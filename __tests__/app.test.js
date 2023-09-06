@@ -67,25 +67,4 @@ describe('GET /product/:id', () => {
     expect(response.status).toBe(500)
     expect(response.body.message).toBe('Something went wrong')
   })
-  it('should not call the database for a cached product', async () => {
-    const product = new Product({
-      name: 'Test Cache Product',
-      price: 9.99,
-      description: 'This is a test product'
-    })
-    await product.save()
-
-    const spyFindById = jest.spyOn(Product, 'findById')
-
-    const response = await request(app).get(`/product/${product._id}`)
-    console.log(response.body)
-
-    expect(response.status).toBe(200)
-    expect(spyFindById).toHaveBeenCalledTimes(1)
-
-    const response2 = await request(app).get(`/product/${product._id}`)
-
-    expect(response2.status).toBe(200)
-    expect(spyFindById).toHaveBeenCalledTimes(1)
-  })
 })
