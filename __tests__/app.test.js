@@ -24,6 +24,9 @@ describe('GET /product/:id', () => {
     // Clear the test database before each test
     await Product.deleteMany({})
   })
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
 
   it('should return a product when given a valid ID', async () => {
     const product = new Product({
